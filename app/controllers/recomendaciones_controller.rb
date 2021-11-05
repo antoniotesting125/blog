@@ -1,5 +1,6 @@
 class RecomendacionesController < ApplicationController
   before_action :set_recomendacion, only: %i[ show edit update destroy ]
+  skip_before_action :authenticate_user!, only: :index
 
   # GET /recomendaciones or /recomendaciones.json
   def index
@@ -17,6 +18,7 @@ class RecomendacionesController < ApplicationController
 
   # GET /recomendaciones/1/edit
   def edit
+    return if !es_el_autor
   end
 
   # POST /recomendaciones or /recomendaciones.json
@@ -36,6 +38,7 @@ class RecomendacionesController < ApplicationController
 
   # PATCH/PUT /recomendaciones/1 or /recomendaciones/1.json
   def update
+    return if !es_el_autor
     respond_to do |format|
       if @recomendacion.update(recomendacion_params)
         format.html { redirect_to @recomendacion, notice: "Recomendacion was successfully updated." }
@@ -49,6 +52,7 @@ class RecomendacionesController < ApplicationController
 
   # DELETE /recomendaciones/1 or /recomendaciones/1.json
   def destroy
+    return if !es_el_autor
     @recomendacion.destroy
     respond_to do |format|
       format.html { redirect_to recomendaciones_url, notice: "Recomendacion was successfully destroyed." }
@@ -66,4 +70,18 @@ class RecomendacionesController < ApplicationController
     def recomendacion_params
       params.require(:recomendacion).permit(:titulo, :contenido, :user_id)
     end
+
+    def es_el_autor
+      autor = current_user.id == @recomendacion.user.id
+      
+      if current_user.nil?
+        # Esto no deberia ocurrir
+        redirect_to recomendaciones_path
+      elsif !autor
+        redirect_to @recomendacion, notice: "No eres el autor, no puedes modificar esta recomendación"
+      end
+
+      return autor
+    end
+
 end

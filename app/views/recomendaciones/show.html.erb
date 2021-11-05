@@ -12,8 +12,11 @@
 
 <p>
   <strong>User:</strong>
-  <%= @recomendacion.user_id %>
+  <%= @recomendacion.user.email %>
 </p>
 
-<%= link_to 'Edit', edit_recomendacion_path(@recomendacion) %> |
+<% if current_user.nil? %>
+<% elsif current_user.id == @recomendacion.user.id %>
+  <%= link_to 'Edit', edit_recomendacion_path(@recomendacion) %> |
+<% end %>
 <%= link_to 'Back', recomendaciones_path %>
