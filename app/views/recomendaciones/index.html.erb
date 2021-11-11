@@ -8,7 +8,7 @@
     <br><br><br>
     <%= recomendacion.contenido.first(150) %>... <%= link_to 'Continuar leyendo', recomendacion %>
     <% if current_user.nil? %>
-    <% elsif current_user.id == recomendacion.user.id %>
+    <% elsif recomendacion.es_mi_autor?(current_user) %>
         <%= link_to 'Editar', edit_recomendacion_path(recomendacion) %>
         <%= link_to 'Eliminar', recomendacion, method: :delete, data: { confirm: 'Are you sure?' } %>
     <% end %>

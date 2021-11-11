@@ -72,7 +72,7 @@ class RecomendacionesController < ApplicationController
     end
 
     def es_el_autor
-      autor = current_user.id == @recomendacion.user.id
+      autor = @recomendacion.es_mi_autor?(current_user)
       
       if current_user.nil?
         # Esto no deberia ocurrir
