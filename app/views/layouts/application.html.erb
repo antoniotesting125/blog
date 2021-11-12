@@ -11,6 +11,19 @@
   </head>
 
   <body>
+
+    <!-- Menú -->
+    <div>
+      <%= link_to "Inicio", recomendaciones_path %>
+
+      <% if current_user.nil? %>
+        <%= link_to "Iniciar sesión", new_user_session_path %>
+      <% else %>
+        <%= link_to "Cerrar sesión", destroy_user_session_path, method: :delete %>
+      <% end %>
+    </div>
+    <!-- Menú -->
+
     <%= yield %>
   </body>
 </html>

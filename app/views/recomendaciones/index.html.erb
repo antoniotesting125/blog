@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Recomendaciones</h1>
+
+<% @recomendaciones.first(3).each do |recomendacion| %>
+    <h2><%= recomendacion.titulo %></h2>
+    Autor: <%= recomendacion.user.email %>
+    <br><br><br>
+    <%= recomendacion.contenido.first(150) %>... <%= link_to 'Continuar leyendo', recomendacion %>
+    <% if current_user.nil? %>
+    <% elsif recomendacion.es_mi_autor?(current_user) %>
+        <%= link_to 'Editar', edit_recomendacion_path(recomendacion) %>
+        <%= link_to 'Eliminar', recomendacion, method: :delete, data: { confirm: 'Are you sure?' } %>
+    <% end %>
+<% end %>
+
+<br>
+
+<%= link_to 'New Recomendacion', new_recomendacion_path %>

@@ -1,0 +1,22 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Titulo:</strong>
+  <%= @recomendacion.titulo %>
+</p>
+
+<p>
+  <strong>Contenido:</strong>
+  <%= @recomendacion.contenido %>
+</p>
+
+<p>
+  <strong>User:</strong>
+  <%= @recomendacion.user.email %>
+</p>
+
+<% if current_user.nil? %>
+<% elsif current_user.id == @recomendacion.user.id %>
+  <%= link_to 'Edit', edit_recomendacion_path(@recomendacion) %> |
+<% end %>
+<%= link_to 'Back', recomendaciones_path %>
