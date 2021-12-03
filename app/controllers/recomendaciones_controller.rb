@@ -3,13 +3,13 @@ class RecomendacionesController < ApplicationController
   skip_before_action :authenticate_user!, only: :index_home
 
   def index_home
-    @recomendaciones = Recomendacion.all
+    @recomendaciones = Recomendacion.paginate(page: params[:page])
     render "index"
   end
   
   # GET /recomendaciones or /recomendaciones.json
   def index
-    @recomendaciones = current_user.recomendaciones
+    @recomendaciones = current_user.recomendaciones.paginate(page: params[:page])
   end
 
   # GET /recomendaciones/1 or /recomendaciones/1.json
