@@ -1,10 +1,15 @@
 class RecomendacionesController < ApplicationController
   before_action :set_recomendacion, only: %i[ show edit update destroy ]
-  skip_before_action :authenticate_user!, only: :index
+  skip_before_action :authenticate_user!, only: :index_home
 
+  def index_home
+    @recomendaciones = Recomendacion.all
+    render "index"
+  end
+  
   # GET /recomendaciones or /recomendaciones.json
   def index
-    @recomendaciones = Recomendacion.all
+    @recomendaciones = current_user.recomendaciones
   end
 
   # GET /recomendaciones/1 or /recomendaciones/1.json
