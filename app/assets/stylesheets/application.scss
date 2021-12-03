@@ -13,3 +13,15 @@
  *= require_tree .
  *= require_self
  */
+// Custom bootstrap variables must be set or imported *before* bootstrap.
+@import "bootstrap";
+
+.overflow {
+    overflow: auto;
+}
+
+.btn-purple {
+    color: #fff;
+    background-color: #87206C;
+    border-color: #87206C;
+}
