@@ -1,5 +1,3 @@
-<p id="notice"><%= notice %></p>
-
 <h1>Recomendaciones</h1>
 
 <% @recomendaciones.each do |recomendacion| %>
@@ -41,10 +39,16 @@
     </div><!-- Card -->
 <% end %>
 
-<br>
+<div class="row">
 
-<%= link_to 'New Recomendacion', new_recomendacion_path %>
+    <div class="col-4">
+        <%= link_to 'Crear Nueva Recomendación', new_recomendacion_path, class: "btn btn-success" %>
+    </div>
 
-<div class="digg_pagination">
-    <%= will_paginate @recomendaciones %>
+    <div class="col">
+        <div class="digg_pagination">
+            <%= will_paginate @recomendaciones %>
+        </div>
+    </div>
+
 </div>

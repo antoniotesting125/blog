@@ -83,7 +83,7 @@ class RecomendacionesController < ApplicationController
         # Esto no deberia ocurrir
         redirect_to recomendaciones_path
       elsif !autor
-        redirect_to @recomendacion, notice: "No eres el autor, no puedes modificar esta recomendación"
+        redirect_to @recomendacion, alert: "No eres el autor, no puedes modificar esta recomendación"
       end
 
       return autor
