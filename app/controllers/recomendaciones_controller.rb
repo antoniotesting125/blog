@@ -1,10 +1,15 @@
 class RecomendacionesController < ApplicationController
   before_action :set_recomendacion, only: %i[ show edit update destroy ]
-  skip_before_action :authenticate_user!, only: :index
+  skip_before_action :authenticate_user!, only: :index_home
 
+  def index_home
+    @recomendaciones = Recomendacion.paginate(page: params[:page])
+    render "index"
+  end
+  
   # GET /recomendaciones or /recomendaciones.json
   def index
-    @recomendaciones = Recomendacion.all
+    @recomendaciones = current_user.recomendaciones.paginate(page: params[:page])
   end
 
   # GET /recomendaciones/1 or /recomendaciones/1.json
@@ -78,7 +83,7 @@ class RecomendacionesController < ApplicationController
         # Esto no deberia ocurrir
         redirect_to recomendaciones_path
       elsif !autor
-        redirect_to @recomendacion, notice: "No eres el autor, no puedes modificar esta recomendación"
+        redirect_to @recomendacion, alert: "No eres el autor, no puedes modificar esta recomendación"
       end
 
       return autor
